@@ -1,4 +1,3 @@
-
 /*global tb_show, hrecipe_handle, hrecipe_qttoolbar:true, document, newbutton:true, tb_remove, url */
 /*global tinyMCE, edInsertContent, edCanvas */
 
@@ -57,41 +56,32 @@ function getSelectValue(fieldId) {
 // arrary traversing id's and names later.
 // Suggestions welcome.
 // Move to hrecipe_format.js
-function getCheckedValues() {
+function getCheckedValues( as_array ) {
+  as_array = as_array || false;
   
   var need_comma = false;
-  var comma = ', ';
-  var diet = '';
-  if (document.getElementById('low_calorie').checked) { 
-     diet += 'Low calorie';
-     need_comma = true; 
-  }
-  if (document.getElementById('reduced_fat').checked) { 
-     if (need_comma) diet += comma;
-     diet += 'Reduced fat'; 
-     need_comma = true; 
-  }
-  if (document.getElementById('reduced_carbohydrate').checked) { 
-     if (need_comma) diet += comma;
-     diet += 'Reduced carbohydrate'; 
-     need_comma = true; 
-  }
-  if (document.getElementById('high_protein').checked) { 
-     if (need_comma) diet += comma;
-     diet += 'High protein'; 
-     need_comma = true;      
-  }
-  if (document.getElementById('gluten_free').checked) { 
-     if (need_comma) diet += comma;
-     diet += 'Gluten free';
-     need_comma = true;       
-  }
-  if (document.getElementById('raw').checked) { 
-     if (need_comma) diet += comma;
-     diet += 'Raw'; 
+  var diet = [];
+  var separator = ', ';
+  var diet_elements = {
+    'low_calorie' : 'Low Calorie',
+    'reduced_fat' : 'Reduced Fat',
+    'reduced_carbohydrate' : 'Reduced Carbohydrate',
+    'high_protein' : 'High Protein',
+    'gluten_free' : 'Gluten Free',
+    'raw' : 'Raw'
+  };
+  
+  for ( var i in diet_elements ) {
+    if ( document.getElementById( i ).checked ) {
+      diet.push( diet_elements[ i ] );
+    }
   }
 
-  return  diet;
+  if ( as_array ) {
+    return diet;
+  }
+  
+  return  diet.join( separator );
 }
 
 function recipe() {}
